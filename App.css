@@ -1,0 +1,435 @@
+/*main layout style*/
+.Main_Layout{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+.app_title{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px ;
+  position: fixed;
+  top: 8cqb;
+}
+.word_title{
+  font-size: 100px;
+  color: red;
+  opacity: 0.97;
+  font-family: monospace;
+  font-weight: bold;
+}
+.app_description{
+  font-family: monospace;
+  color: whitesmoke;
+  font-weight: bold;
+  font-size: 32px;
+  margin-top: 30px;
+  animation: blink_app_description 3s ease-in-out infinite;
+}
+
+@keyframes blink_app_description {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+
+
+/*left menu style*/
+.arrow_LM{
+  color: whitesmoke;
+  font-family: monospace;
+  font-size: 80px;
+  font-weight: bold;
+  right: 30px;
+  position: absolute;
+  cursor: pointer;
+}
+.content_LM{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 0px;
+  overflow: hidden;
+  height: 100%;
+  left: 20px;
+  position: fixed;
+}
+
+
+
+.Left_Menu{
+  display: block;
+  width: 150px;
+  background-color: rgba( 255 , 8 , 0 , 0.4 );
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  height: 100vh;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease-in-out;
+  box-shadow: 0 0 30px rgba(254, 254, 254, 0.7), 0 0 50px rgba(0, 0, 0, 0.5);
+  /* Optional: add blur effect */
+  backdrop-filter: blur(5px);
+}
+.Left_Menu:hover{
+  background-color: rgba( 255 , 8 , 0 , 0.6 );
+}
+
+
+
+/*right menu style*/
+.Right_Menu{
+  display: block;
+  width: 150px;
+  background-color: rgba( 255 , 8 , 0 , 0.4 );
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  height: 100vh;
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease-in-out;
+  box-shadow: 0 0 30px rgba(254, 254, 254, 0.7), 0 0 50px rgba(0, 0, 0, 0.5);
+  /* Optional: add blur effect */
+  backdrop-filter: blur(5px);
+}
+.Right_Menu:hover{
+  background-color: rgba( 255 , 8 , 0 , 0.6 );
+}
+.arrow_RM{
+  color: whitesmoke;
+  font-family: monospace;
+  font-size: 80px;
+  font-weight: bold;
+  left: 30px;
+  position: absolute;
+  cursor: pointer;
+  transform: rotate(180deg);
+}
+.content_RM{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 0px;
+  overflow: hidden;
+  height: 100%;
+  right: 20px;
+  position: fixed;
+}
+
+
+
+/*links styles*/
+.standard_link{
+  text-decoration: none;   /* Remove underline */
+  color: white;            /* Text color */
+  font-weight: bold;       /* Bold text */
+  font-family: monospace;  /* Monospace font */
+  font-size: 30px;   
+  transition: font-size 0.3s ease-in-out;
+}
+.standard_link:hover{
+  font-size: 32px;
+}
+
+
+/*shadowing effect for the main app*/
+.overlay {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    /* Top gradient */
+    linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.05)) top,
+    /* Bottom gradient */
+    linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.9)) bottom,
+    /* Left gradient */
+    linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0)) left,
+    /* Right gradient */
+    linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9)) right;
+  background-size: 100% 31%, 100% 25%, 25% 100%, 25% 100%; /* Adjust the size of the frame */
+  background-repeat: no-repeat;
+   /* Set a higher z-index */
+}
+
+
+
+.menu_divs{
+  z-index: 1;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  overflow: hidden;
+  color: white;
+}
+
+.dashboard_page{
+  z-index: 1;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  overflow: auto;
+}
+
+.content4Feature{
+  position: fixed;
+  color: whitesmoke;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: monospace;
+  text-align: left;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  max-width: 650px;
+  height: auto;
+  top: 250px;
+  left: 150px;
+  background-color: rgba(210, 4, 45 , 0.9 );
+  box-shadow: 0 0 20px 50px rgba(210, 4, 45 , 0.9 );
+  display: block;
+}
+
+.monitorContent{
+  border-radius: 5px;
+  position: absolute;
+  color: whitesmoke;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: monospace;
+  text-align: left;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  max-width: 1600p;
+  width: auto;
+  height: 500px;
+  top: 250px;
+  left: 180px;
+  padding: 5px 5px 5px 5px;
+  background-color: rgba(210, 4, 45 , 0.9 );
+  box-shadow: 0 0 20px 50px rgba(210, 4, 45 , 0.9 );
+  display: block;
+}
+
+.link_to_server_input{
+  font-size: 14px;
+  background-color: #333333;
+  border-radius: 15px;
+  min-width: 550px;
+  max-width: auto;
+  text-align: center;
+  font-family: monospace;
+  height: 25px;
+  border: 3px inset #333333;
+  margin-top: 10px;
+  color: whitesmoke;
+  vertical-align: middle;
+}
+.button4Server{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: whitesmoke;
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 30px;
+  font-family: monospace;
+  background-color: #333333;
+  vertical-align: middle;
+}
+
+.link_to_server_response{
+  background-color: #333333;
+  border-radius: none;
+  min-width: 550px;
+  max-width: auto;
+  text-align: center;
+  font-size: 14px;
+  font-family: monospace;
+  min-height: 50px;
+  height: 80px;
+  border: 3px inset #333333;
+  margin-top: 10px;
+  color: whitesmoke;
+  vertical-align: middle;
+  resize: none;
+}
+
+
+
+
+.ready_in_refresh,
+.ready_in_layout{
+  width: 575px;
+  height: 30px;
+  border-radius: 15px;
+  color: whitesmoke;
+  font-weight: bold;
+  font-size: 20px;
+  background-color: rgba(51, 51, 51, 1);
+}
+
+
+.layout_input{
+  background-color: #333333;
+  border-radius: 15px;
+  width: 200px;
+  text-align: center;
+  height: 20px;
+  font-size: 16px;
+  border: 2px inset #333333;
+  margin-top: 0px;
+  vertical-align: middle;
+  color: whitesmoke;
+  border: 3px inset #333333;
+}
+.radio_button{
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.refreshing_input{
+  background-color: #333333;
+  border-radius: 15px;
+  width: 163px;
+  text-align: center;
+  height: 25px;
+  border: 3px inset #333333;
+  margin-top: 0px;
+  color: whitesmoke;
+  font-size: 16px;
+  vertical-align: middle;
+}
+
+.composerButton{
+  width: 150px;
+  height: 35px;
+  color: whitesmoke;
+  background-color: #333333;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.status_composer{
+  width: 650px;
+  background-color: #333333;
+  color: whitesmoke;
+  border-radius: 10px;
+  height: 30px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.sub_status_composer{
+  width: 650px;
+  background-color: #333333;
+  color: whitesmoke;
+  border-radius: 10px;
+  height: 30px;
+  font-size: 16px;
+  text-align: center;
+}
+
+
+.standard_link_pages{
+  text-decoration: none;   /* Remove underline */
+  color: white;            /* Text color */
+  font-weight: bold;       /* Bold text */
+  font-family: monospace;  /* Monospace font */
+  font-size: 18px;   
+  transition: font-size 0.3s ease-in-out;
+}
+
+
+
+input[type="checkbox"]:checked {
+  background-color: #4CAF50; /* Change this to your desired fill color */
+  border-color: #4CAF50;
+}
+
+.setBiasModuleParam{
+  color: "whitesmoke";
+  width: 180px;
+  background-color: #333;
+  border-radius: 10px;
+  text-align: center;
+  font-family: monospace;
+  color: whitesmoke;
+}
+
+.msytecContainer{
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+.anchorInsideMsytec{
+  border: solid 3px #333;
+  padding: 3px 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: whitesmoke;
+  font-family: monospace;
+  font-size: 18px; 
+}
+
+.wrapperForValueSet{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sendToMsyTec{
+  color: whitesmoke;
+  background-color: #333;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: monospace;
+}
+
+.mesytecResponse{
+  background-color: #333;
+  width: 640px;
+  color: white;
+  border-radius: 10px;
+  height: 25px;
+  font-size: 15px;
+  font-family: monospace;
+  text-align: center;
+}

@@ -1,0 +1,9 @@
+{
+    "servicename" : "fcebd5e8815db780",
+    "process_variables" : {
+        "interrogate_montirized_voltage_name" : "VMon" ,
+        "interrogate_montirized_current_name" : "IMon" ,
+        "interrogate_montirized_maxAllowedVoltage" : "SVMax" , 
+        "interrogate_issue_trigger_status" : "Status"
+    }
+}

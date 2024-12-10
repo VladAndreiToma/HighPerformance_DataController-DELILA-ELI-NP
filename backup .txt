@@ -1,0 +1,161 @@
+&&&&&&&&&& Cast page code backup
+ 
+import React from "react";
+import { useState , useRef , useEffect } from "react";
+import gsap from "gsap";
+import bg from "./MakePageBG.jpg";
+
+import { draw, gStyle, redraw, create, httpRequest , parse } from 'https://root.cern/js/latest/modules/main.mjs';
+
+
+export default function CastPage( { pageArray , rows , cols , hours , minutes , seconds , serverLink,
+    qCurvy , qPoly , qScatter , qLineColor , qLineWidth , qFillState , qFillColor , boardID , what
+ } ){
+
+    let divNum = 0;
+    const fileExtension = '/root.json';
+    const fetchInterval = (hours * 3600 + minutes*60 + seconds) * 1000; // Interval time in milliseconds (e.g., 60000 ms = 1 minute)
+
+
+
+    console . log( fetchInterval , ' in fetch interval' );
+
+    // clean the link
+    serverLink = serverLink.includes('h.json')
+    ? serverLink.replace('h.json', '')
+        : serverLink;
+
+        boardID = boardID . includes('oa') ? boardID . replace('oa','') : boardID;
+        console . log( 'board id in cast: ' , boardID )
+
+
+    console . log( 'in cast page: ' , serverLink );
+    console . log( 'page array: ' , pageArray );
+
+
+    let multipleFetchLink = null;
+    if( what === 'hist' )
+        multipleFetchLink = pageArray . map( ( _ , index ) => ( boardID + '/' + pageArray[index] + fileExtension ) ) . join( '\n' );
+    else if( what === 'adc' )
+        multipleFetchLink = pageArray  . map( ( _ , index ) => ( boardID + '/' + pageArray[index].replace( 'hist' , 'ADC' ) + fileExtension ) ) . join( '\n' );
+
+    multipleFetchLink += '\n';
+    console . log( multipleFetchLink );
+
+
+
+    async function fetchHistograms() {
+        let fetchedHistos = null;
+        try {
+            console . log( serverLink + `multi.json?number=${pageArray.length}` , '\n' );
+            fetchedHistos = await httpRequest(serverLink + `multi.json?number=${pageArray.length}`, 'multi', multipleFetchLink);
+            console.log('Fetched Histograms:', fetchedHistos);
+        } catch (error) { 
+            throw new error;
+        }
+        return fetchedHistos;
+    }
+
+    useEffect(() => {
+        const processedServerLink = serverLink.includes('h.json')
+            ? serverLink.replace('h.json', '')
+            : serverLink;
+
+        // clean boardi
+        let drawOption = null;
+        // Function to fetch data and redraw charts
+        const fetchDataAndDraw = async () => {
+            try {
+                console.log('Fetching data from:', processedServerLink);
+                console . log( 'The Histograms for this page: ' , pageArray );
+                // constructing the one time fetch link
+                //const oneTimeFetchLink = pageArray . map( item => ( prcessedServerLink + item + fileExtension  ) . toString() . join('\n') );
+               // console . log( 'The one time fetching link: ',  oneTimeoFetchLink );
+                let collectedHistos = await fetchHistograms();
+                for (let index = 0; index < pageArray.length; index++) {
+                    let collectedJSON = collectedHistos[ index ];
+                    const divChartById = document.getElementById(`div${index+1}`);
+                    if (divChartById && collectedJSON) {
+                        switch( true ){
+                            case qPoly:
+                                drawOption = 'HIST';
+                                break;
+                            case qCurvy:
+                                drawOption = "C";
+                                break;
+                            case qScatter:
+                                drawOption = 'P';
+                                break;
+                            default:
+                                drawOption = 'HIST';
+                                break;
+                        }
+                        if( qFillState ){
+                        switch( true ){
+                            case qFillColor === 'red':
+                                collectedJSON . fFillColor = '46';
+                                break;
+                            case qFillColor === 'blue':
+                                collectedJSON . fFillColor = '9';
+                                break;
+                            case qFillColor === 'slate':
+                                collectedJSON . fFillColor = '35';
+                                break;
+                            default:
+                                collectedJSON . fFillColor = '12';
+                                break; 
+                        }}
+                        switch( true ){
+                            case qLineColor === 'red':
+                                collectedJSON . fLineColor = '46';
+                                break;
+                            case qLineColor === 'blue':
+                                collectedJSON . fLineColor = '9';
+                                break;
+                            case qLineColor === 'slate':
+                                collectedJSON . fLineColor = '35';
+                                break;
+                            default:
+                                collectedJSON . fLineColor = '12';
+                                break;
+                        }
+                        collectedJSON . fLineWidth = qLineWidth;
+
+                        redraw(divChartById, collectedJSON, drawOption );
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to fetch or draw data', error);
+            }
+        };
+
+        // Initial data fetch
+        fetchDataAndDraw();
+
+        // Set interval to fetch and redraw data periodically
+        const intervalId = setInterval(fetchDataAndDraw, fetchInterval);
+
+        // Clear interval on component unmount
+        return () => clearInterval(intervalId);
+
+     }, [ rows , cols , hours , minutes , seconds , serverLink , pageArray ] ); // Dependencies that trigger the effect
+
+    return(
+        <div className="dashboard_page" style={{ display: 'grid' , background: `url(${bg})` , 
+        gridTemplateColumns: `repeat(${cols}, minmax(550px, 1fr))` , gridTemplateRows: `repeat(${rows}, minmax(350px, 1fr))` }}>
+            {Array.from({ length: rows }).map((_, rowIndex) =>
+                Array.from({ length: cols }).map((_, colIndex) => {
+                    divNum += 1;
+                    return(<div id = {`div${divNum}`}
+                        key={`r${rowIndex}-c${colIndex}`}
+                        style={{
+                            border: '1px solid #ccc', // Optional: to visualize the grid
+                        }}
+                    >
+                    {/* Content for each cell */}
+                    </div>);
+                })
+            )}
+        </div>
+    );
+} 

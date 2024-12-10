@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb_new1
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_DB=HVmodule_CAEN_SY4527_database
+      - INFLUXDB_ADMIN_ENABLED=false
+    volumes:
+      - ./data/influx_db_data:/var/lib/influxdb
+    restart: always
+
+  grafana:
+    image: grafana/grafana:8.4.3
+    container_name: grafana_new1
+    ports:
+      - "3005:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=puppexUsesGrafana
+    depends_on:
+      - influxdb
+    volumes:
+      - ./data/grafana_data:/var/lib/grafana
+    restart: always
